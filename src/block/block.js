@@ -53,5 +53,7 @@ registerBlockType( 'browser-shots/browser-shots-carousel', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: edit,
-	save: null
+	save() {
+		return null;
+	}
 } );

@@ -4,7 +4,7 @@
  * Plugin URI: https://mediaron.com/downloads/browser-shots-carousel/
  * Description: Show off your website screenshots in a carousel format.
  * Version: 1.0.0
- * Author: Ronald Huereca
+ * Author: Ronald Huereca, Ben Gilbanks
  * Author URI: https://mediaron.com
  * Requires at least: 5.0
  * Contributors: ronalfy
@@ -18,15 +18,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'BROWSER_SHOTS_CAROUSEL_PLUGIN_NAME', 'Browser Shots Carousel' );
-define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_DIR', plugin_dir_path( __FILE__ ) );
-define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_URL', plugins_url( '/', __FILE__ ) );
-define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_VERSION', '1.0.0' );
-define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_SLUG', plugin_basename( __FILE__ ) );
-define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_FILE', __FILE__ );
-
+define( 'BROWSER_SHOTS_CAROUSEL_DIR', plugin_dir_path( __FILE__ ) );
+define( 'BROWSER_SHOTS_CAROUSEL_URL', plugins_url( '/', __FILE__ ) );
+define( 'BROWSER_SHOTS_CAROUSEL_VERSION', '1.0.0' );
+define( 'BROWSER_SHOTS_CAROUSEL_SLUG', plugin_basename( __FILE__ ) );
+define( 'BROWSER_SHOTS_CAROUSEL_FILE', __FILE__ );
 
 
 /**
- * Block Initializer.
+ * Block Registration and Output.
  */
-require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
+require_once BROWSER_SHOTS_CAROUSEL_DIR . 'src/block/class-browser-shots-carousel.php';

@@ -1,21 +1,30 @@
 <?php
 /**
- * Plugin Name: browser-shots-carousel — CGB Gutenberg Block Plugin
- * Plugin URI: https://github.com/ahmadawais/create-guten-block/
- * Description: browser-shots-carousel — is a Gutenberg plugin created via create-guten-block.
- * Author: mrahmadawais, maedahbatool
- * Author URI: https://AhmadAwais.com/
+ * Plugin Name: Browser Shots Carousel
+ * Plugin URI: https://mediaron.com/downloads/browser-shots-carousel/
+ * Description: Show off your website screenshots in a carousel format.
  * Version: 1.0.0
- * License: GPL2+
- * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
- *
- * @package CGB
+ * Author: Ronald Huereca
+ * Author URI: https://mediaron.com
+ * Requires at least: 5.0
+ * Contributors: ronalfy
+ * Text Domain: browser-shots-carousel
+ * Domain Path: /languages
  */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+define( 'BROWSER_SHOTS_CAROUSEL_PLUGIN_NAME', 'Browser Shots Carousel' );
+define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_DIR', plugin_dir_path( __FILE__ ) );
+define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_URL', plugins_url( '/', __FILE__ ) );
+define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_VERSION', '1.0.0' );
+define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_SLUG', plugin_basename( __FILE__ ) );
+define( 'BROWSER_SHOTS_CAROUSEL_BEAVER_BUILDER_FILE', __FILE__ );
+
+
 
 /**
  * Block Initializer.

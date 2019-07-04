@@ -36,7 +36,7 @@ class Browser_Shots_Carousel extends Component {
 		super( ...arguments );
 
 		this.state = {
-			slides: this.props.attributes.slides,
+			slides: [''],
 			html: this.props.attributes.html,
 			welcome: '' === this.props.attributes.url ? true : false,
 			version: '1',
@@ -53,6 +53,7 @@ class Browser_Shots_Carousel extends Component {
 			display_link: 'undefined' === typeof this.props.attributes.display_link ? true : this.props.attributes.display_link,
 			post_links: 'undefined' === typeof this.props.attributes.post_links ? false : this.props.attributes.post_links,
 		};
+		this.props.attributes.slides = this.state.slides;
 
 	};
 
@@ -100,12 +101,20 @@ class Browser_Shots_Carousel extends Component {
 				<label>{__( 'Enter a URL', 'browser-shots-carousel' )}
 					<input
 						type="text"
-						value={el||''}
+						value={this.props.attributes.slides[i]['title']||''}
 						placeholder = "http://"
 						onChange={this.handleChange.bind(this, i)}
 					/>
-					<input type='button' value='remove' onClick={this.removeClick.bind(this, i)} />
 				</label>
+				<RichText
+					tagName="div"
+					className='wp-caption-text'
+					placeholder={__( 'Write caption...', 'browser-shots' )}
+					value={this.props.attributes.slides[i]['caption']||''}
+					onChange={this.handleCaptionChange.bind(this, i)}
+				/>
+				<input type='button' value='remove' onClick={this.removeClick.bind(this, i)} />
+
 			</div>
 		) );
 	}
@@ -120,13 +129,30 @@ class Browser_Shots_Carousel extends Component {
 		this.setState({ slides });
 	 }
 
+	 handleCaptionChange = (i, event) => {
+		if ( undefined == event ) {
+			return;
+		}
+		let slides = [...this.state.slides];
+		if ( slides.length == 0 ) {
+			return;
+		}
+		slides[i]['caption'] = event || '';
+		this.setState({ slides });
+		this.props.slides = slides;
+	}
+
 	handleChange = (i, event) => {
 		if ( undefined == event ) {
 			return;
 		}
 		let slides = [...this.state.slides];
-		slides[i] = event.target.value;
+		if ( slides.length == 0 ) {
+			return;
+		}
+		slides[i]['title'] = event || '';
 		this.setState({ slides });
+		this.props.slides = slides;
 	}
 
 
@@ -154,6 +180,8 @@ class Browser_Shots_Carousel extends Component {
 
 		const { attributes } = this.props;
 		const { width, items, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
+
+		attributes.slides = this.state.slides;
 
 		const relOptions = [
 			{

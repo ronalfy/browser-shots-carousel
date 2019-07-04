@@ -100,8 +100,9 @@ class Browser_Shots_Carousel extends Component {
 				<label>{__( 'Enter a URL', 'browser-shots-carousel' )}
 					<input
 						type="text"
-						value = 'this is a title'
+						value={el||''}
 						placeholder = "http://"
+						onChange={this.handleChange.bind(this, i)}
 					/>
 					<input type='button' value='remove' onClick={this.removeClick.bind(this, i)} />
 				</label>
@@ -118,6 +119,15 @@ class Browser_Shots_Carousel extends Component {
 		slides.splice(i,1);
 		this.setState({ slides });
 	 }
+
+	handleChange = (i, event) => {
+		if ( undefined == event ) {
+			return;
+		}
+		let slides = [...this.state.slides];
+		slides[i] = event.target.value;
+		this.setState({ slides });
+	}
 
 
 	/**

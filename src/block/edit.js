@@ -36,6 +36,7 @@ class Browser_Shots_Carousel extends Component {
 		super( ...arguments );
 
 		this.state = {
+			slides: [],
 			html: this.props.attributes.html,
 			welcome: '' === this.props.attributes.url ? true : false,
 			version: '1',
@@ -79,6 +80,45 @@ class Browser_Shots_Carousel extends Component {
 
 	};
 
+	/**
+	 * Clones an array for slides.
+	 */
+	cloneArray = ( arr ) => {
+		if (Array.isArray(arr)) {
+			for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+			arr2[i] = arr[i];
+			}
+			return arr2;
+		} else {
+			return Array.from(arr);
+		}
+	}
+
+	showSlides = () => {
+		return ( this.state.slides.map((el, i) =>
+			<div key={i}>
+				<label>{__( 'Enter a URL', 'browser-shots-carousel' )}
+					<input
+						type="text"
+						value = 'this is a title'
+						placeholder = "http://"
+					/>
+					<input type='button' value='remove' onClick={this.removeClick.bind(this, i)} />
+				</label>
+			</div>
+		) );
+	}
+
+	addClick = () => {
+		this.setState(prevState => ({ slides: [...prevState.slides, '']}));
+	}
+
+	removeClick(i){
+		let slides = [...this.state.slides];
+		slides.splice(i,1);
+		this.setState({ slides });
+	 }
+
 
 	/**
 	 * Create a preview image.
@@ -103,7 +143,7 @@ class Browser_Shots_Carousel extends Component {
 	render() {
 
 		const { attributes } = this.props;
-		const { width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
+		const { width, items, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
 
 		const relOptions = [
 			{
@@ -366,30 +406,7 @@ class Browser_Shots_Carousel extends Component {
 									</g>
 								</svg>
 							</div>
-							<div>
-								<label htmlFor="browser-shots-url">{__( 'Enter a URL', 'browser-shots-carousel' )}</label>
-							</div>
-							<div>
-								<input type="text"
-									id="browser-shots-url"
-									autoFocus="true"
-									value={this.state.url}
-									placeholder="http://"
-									onChange={
-										( event ) => {
-											this.urlChange( event );
-										}
-									}
-								/>
-								<RichText
-									tagName="div"
-									className='wp-caption-text'
-									placeholder={__( 'Write caption...', 'browser-shots-carousel' )}
-									value={content}
-									onChange={( content ) => this.props.setAttributes( { content: content } )}
-								/>
-
-							</div>
+							{this.showSlides()}
 							<div>
 								<input
 									className="button button-primary"
@@ -397,10 +414,8 @@ class Browser_Shots_Carousel extends Component {
 									type="submit" id="browsershots-input-submit"
 									value={__( 'Add Slide', 'browser-shots-carousel' )}
 									onClick={
-										() => {
-											if ( '' !== this.props.attributes.url ) {
-												this.setState( { welcome: false } );
-											}
+										( e ) => {
+											this.addClick();
 										}
 									}
 								/>

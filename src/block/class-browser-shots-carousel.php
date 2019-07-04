@@ -86,13 +86,17 @@ class Browser_Shots_Carousel {
 				// Enqueue blocks.editor.build.css in the editor only.
 				'editor_style'    => 'browser_shots_carousel_editor',
 				'attributes'      => array(
+					'slides'       => array(
+						'type'    => 'query',
+						'default' => '[]',
+					),
 					'html'         => array(
 						'type'    => 'string',
 						'default' => '',
 					),
-					'url'          => array(
-						'type'    => 'string',
-						'default' => '',
+					'items'          => array(
+						'type'    => 'array',
+						'default' => [],
 					),
 					'width'        => array(
 						'type'    => 'int',

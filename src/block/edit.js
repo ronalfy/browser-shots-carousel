@@ -36,7 +36,7 @@ class Browser_Shots_Carousel extends Component {
 		super( ...arguments );
 
 		this.state = {
-			slides: [],
+			slides: this.props.attributes.slides,
 			html: this.props.attributes.html,
 			welcome: '' === this.props.attributes.url ? true : false,
 			version: '1',

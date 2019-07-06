@@ -85,19 +85,8 @@ class Browser_Shots_Carousel extends Component {
 	};
 
 	/**
-	 * Clones an array for slides.
+	 * Return all slides in JSX format.
 	 */
-	cloneArray = ( arr ) => {
-		if (Array.isArray(arr)) {
-			for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-			arr2[i] = arr[i];
-			}
-			return arr2;
-		} else {
-			return Array.from(arr);
-		}
-	}
-
 	showSlides = () => {
 		return ( this.state.slides.map((el, i) =>
 			<div key={i}>
@@ -123,10 +112,16 @@ class Browser_Shots_Carousel extends Component {
 		) );
 	}
 
+	/**
+	 * Add a new slide.
+	 */
 	addClick = () => {
 		this.setState(prevState => ({ slides: [...prevState.slides, '']}));
 	}
 
+	/**
+	 * Remove a Slide.
+	 */
 	removeClick(i){
 		let slides = [...this.state.slides];
 		slides.splice(i,1);
@@ -134,6 +129,9 @@ class Browser_Shots_Carousel extends Component {
 		this.setState({ slides });
 	 }
 
+	 /**
+	  * Update the caption when it's changed.
+	  */
 	 handleCaptionChange = (i, event) => {
 		if ( undefined == event ) {
 			return;
@@ -148,6 +146,9 @@ class Browser_Shots_Carousel extends Component {
 
 	}
 
+	/**
+	 * Update the title when it's changed.
+	 */
 	handleChange = (i, event) => {
 		if ( undefined == event ) {
 			return;

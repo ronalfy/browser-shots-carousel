@@ -130,6 +130,7 @@ class Browser_Shots_Carousel extends Component {
 	removeClick(i){
 		let slides = [...this.state.slides];
 		slides.splice(i,1);
+		this.props.setAttributes( { slides: slides } );
 		this.setState({ slides });
 	 }
 

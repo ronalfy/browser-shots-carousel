@@ -208,7 +208,7 @@ class Browser_Shots_Carousel {
 	 */
 	public function block_frontend( $attributes ) {
 
-		if ( is_admin() ) {
+		if ( is_admin() || defined( 'REST_REQUEST' ) ) {
 			return;
 		}
 
@@ -216,8 +216,8 @@ class Browser_Shots_Carousel {
 			'slides'       => $attributes['slides'],
 			'theme'        => $attributes['theme'],
 			'effect'       => $attributes['effect'],
-			'directionNav' => (bool) $attributes['directionNav'],
-			'controlNav'   => (bool) $attributes['controlNav'],
+			'directionNav' => $attributes['directionNav'],
+			'controlNav'   => $attributes['controlNav'],
 			'width'        => absint( $attributes['width'] ),
 			'height'       => absint( $attributes['height'] ),
 			'link'         => ! empty( $attributes['link'] ) ? esc_url_raw( $attributes['link'] ) : '',
@@ -228,6 +228,7 @@ class Browser_Shots_Carousel {
 			'display_link' => (bool) $attributes['display_link'],
 			'post_links'   => (bool) $attributes['post_links'],
 		);
+
 
 		wp_enqueue_script( 'nivo-slider' );
 		wp_print_styles( 'nivo-slider' );
@@ -240,8 +241,18 @@ class Browser_Shots_Carousel {
 		);
 		wp_print_styles( 'nivo-slider-theme' );
 
-		$direction_nav = filter_var( $args['directionNav'], FILTER_VALIDATE_BOOLEAN );
-		$control_nav   = filter_var( $args['controlNav'], FILTER_VALIDATE_BOOLEAN );
+		$direction_nav = ! empty( $direction_nav ) ? filter_var( $args['directionNav'], FILTER_VALIDATE_BOOLEAN ) : false;
+		if ( $direction_nav ) {
+			$direction_nav = 'true';
+		} else {
+			$direction_nav = 'false';
+		}
+		$control_nav   = ! empty( $control_nav ) ? filter_var( $args['controlNav'], FILTER_VALIDATE_BOOLEAN ) : false;
+		if ( $control_nav ) {
+			$control_nav = 'true';
+		} else {
+			$control_nav = 'false';
+		}
 		?>
 		<div class="slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?>">
 			<div class="ribbon"></div>
@@ -259,7 +270,8 @@ class Browser_Shots_Carousel {
 			jQuery( document ).ready( function($ ) {
 				jQuery( '#bsc-slideshow').nivoSlider({
 					effect: '<?php echo esc_js( $args['effect'] ); ?>',
-					controlNav: <?php echo esc_js( $args['controlNav'] ); ?>,
+					directionNav: <?php echo $direction_nav; ?>,
+					controlNav: <?php echo $direction_nav; ?>,
 				} );
 			} );
 		</script>

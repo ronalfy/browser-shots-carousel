@@ -43,7 +43,6 @@ class Browser_Shots_Carousel extends Component {
 			slides: this.props.attributes.slides || [''],
 			directionNav: this.props.attributes.directionNav,
 			controlNav: this.props.attributes.controlNav,
-			html: this.props.attributes.html,
 			welcome: true,
 			version: '1',
 			url: this.props.attributes.url,
@@ -372,47 +371,47 @@ class Browser_Shots_Carousel extends Component {
 				</PanelBody>
 
 				<PanelBody title={__( 'Slider Settings', 'browser-shots' )} initialOpen={false}>
-				<p><em>{__('This is previewed using the default theme with bullets and navigation available. You can change these on the front-end by adjusting your slider settings.', 'browser-shots-carousel' )}</em></p>
-				<SelectControl
-					label={ __( 'Theme', 'wp-plugin-info-card' ) }
-					options={ themeOptions }
-					value={ theme }
-					onChange={ ( value ) => {
-						this.props.setAttributes( { theme: value } );
-						this.props.attributes.theme = value;
-						this.setState( { theme: value } );
-					} }
-				/>
-				<SelectControl
-					label={ __( 'Effect', 'wp-plugin-info-card' ) }
-					options={ effectOptions }
-					value={ effect }
-					onChange={ ( value ) => {
-						this.props.setAttributes( { effect: value } );
-						this.props.attributes.effect = value;
-						this.setState( { effect: value } );
-					} }
-				/>
-				<ToggleControl
-					label={__( 'Allow Next/Prev Nav', 'browser-shots' )}
-					onChange={
-						( value ) => {
-							this.props.setAttributes( { directionNav: value } );
-							this.setState( { directionNav: value } );
+					<p><em>{__('This is previewed using the default theme with bullets and navigation available. You can change these on the front-end by adjusting your slider settings.', 'browser-shots-carousel' )}</em></p>
+					<SelectControl
+						label={ __( 'Theme', 'wp-plugin-info-card' ) }
+						options={ themeOptions }
+						value={ theme }
+						onChange={ ( value ) => {
+							this.props.setAttributes( { theme: value } );
+							this.props.attributes.theme = value;
+							this.setState( { theme: value } );
+						} }
+					/>
+					<SelectControl
+						label={ __( 'Effect', 'wp-plugin-info-card' ) }
+						options={ effectOptions }
+						value={ effect }
+						onChange={ ( value ) => {
+							this.props.setAttributes( { effect: value } );
+							this.props.attributes.effect = value;
+							this.setState( { effect: value } );
+						} }
+					/>
+					<ToggleControl
+						label={__( 'Allow Next/Prev Nav', 'browser-shots' )}
+						onChange={
+							( value ) => {
+								this.props.setAttributes( { directionNav: value } );
+								this.setState( { directionNav: value } );
+							}
 						}
-					}
-					checked={this.state.directionNav}
-				/>
-				<ToggleControl
-					label={__( 'Allow Bullets', 'browser-shots' )}
-					onChange={
-						( value ) => {
-							this.props.setAttributes( { controlNav: value } );
-							this.setState( { controlNav: value } );
+						checked={this.state.directionNav}
+					/>
+					<ToggleControl
+						label={__( 'Allow Bullets', 'browser-shots' )}
+						onChange={
+							( value ) => {
+								this.props.setAttributes( { controlNav: value } );
+								this.setState( { controlNav: value } );
+							}
 						}
-					}
-					checked={this.state.controlNav}
-				/>
+						checked={this.state.controlNav}
+					/>
 				</PanelBody>
 
 				<PanelBody title={__( 'Link Settings', 'browser-shots' )} initialOpen={false}>

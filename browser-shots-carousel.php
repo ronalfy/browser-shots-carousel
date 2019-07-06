@@ -29,3 +29,11 @@ define( 'BROWSER_SHOTS_CAROUSEL_FILE', __FILE__ );
  * Block Registration and Output.
  */
 require_once BROWSER_SHOTS_CAROUSEL_DIR . 'src/block/class-browser-shots-carousel.php';
+
+/**
+ * Load the plugin i18n.
+ */
+function browser_shots_carousel_load_plugin_text_domain() {
+	load_plugin_textdomain( 'browser-shots-carousel', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
+add_action( 'plugins_loaded', 'browser_shots_carousel_load_plugin_text_domain' );

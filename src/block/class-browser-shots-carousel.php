@@ -56,6 +56,15 @@ class Browser_Shots_Carousel {
 			true // Enqueue the script in the footer.
 		);
 
+		// // Register Fancy Box.
+		wp_register_script(
+			'fancybox', // Handle.
+			BROWSER_SHOTS_CAROUSEL_URL . 'src/fancybox.js',
+			array( 'jquery' ),
+			BROWSER_SHOTS_CAROUSEL_VERSION,
+			true // Enqueue the script in the footer.
+		);
+
 		// Register Nivo Slider for front and backend.
 		wp_register_script(
 			'nivo-slider', // Handle.
@@ -231,6 +240,7 @@ class Browser_Shots_Carousel {
 
 
 		wp_enqueue_script( 'nivo-slider' );
+		wp_enqueue_script( 'fancybox' );
 		wp_print_styles( 'nivo-slider' );
 		wp_register_style(
 			'nivo-slider-theme', // Handle.
@@ -239,7 +249,15 @@ class Browser_Shots_Carousel {
 			BROWSER_SHOTS_CAROUSEL_VERSION,
 			'all' // Enqueue the script in the footer.
 		);
+		wp_register_style(
+			'fancybox', // Handle.
+			BROWSER_SHOTS_CAROUSEL_URL . 'src/fancybox.css',
+			array(),
+			BROWSER_SHOTS_CAROUSEL_VERSION,
+			'all' // Enqueue the script in the footer.
+		);
 		wp_print_styles( 'nivo-slider-theme' );
+		wp_print_styles( 'fancybox' );
 
 		$direction_nav = filter_var( $args['directionNav'] );
 		if ( $direction_nav ) {
@@ -259,8 +277,12 @@ class Browser_Shots_Carousel {
 			<div id="bsc-slideshow" class="nivoSlider">
 				<?php
 				foreach ( $args['slides'] as $slide ) {
+					$img_url = sprintf(
+						'https://s0.wordpress.com/mshots/v1/%s?w=1280&h=960',
+						rawurlencode( $slide['title'] )
+					);
 					?>
-					<img src='https://s0.wordpress.com/mshots/v1/<?php echo rawurlencode( $slide['title'] ); ?>?w=<?php echo absint( $args['width'] ); ?>&h=<?php echo absint( $args['height'] ); ?>' width="<?php echo absint( $args['width'] ); ?>" height="<?php echo absint( $args['height'] ); ?>" title="<?php echo esc_attr( $slide['caption'] ); ?>" />
+					<a data-fancybox-trigger="gallery" data-fancybox="gallery" data-caption="<?php echo esc_attr( $slide['caption'] ); ?>" href="<?php echo esc_url_raw( $img_url ); ?>"><img src='https://s0.wordpress.com/mshots/v1/<?php echo rawurlencode( $slide['title'] ); ?>?w=<?php echo absint( $args['width'] ); ?>&h=<?php echo absint( $args['height'] ); ?>' width="<?php echo absint( $args['width'] ); ?>" height="<?php echo absint( $args['height'] ); ?>" title="<?php echo esc_attr( $slide['caption'] ); ?>" /></a>
 					<?php
 				}
 				?>

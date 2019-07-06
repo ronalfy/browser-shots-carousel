@@ -69,18 +69,6 @@ class Browser_Shots_Carousel extends Component {
 
 	};
 
-
-	/**
-	 * Update the app state when a new screenshot path is submitted.
-	 */
-	urlChange = ( event ) => {
-
-		this.props.setAttributes( { url: event.target.value } );
-
-		this.setState( { url: event.target.value } );
-
-	};
-
 	/**
 	 * Return all slides in JSX format.
 	 */

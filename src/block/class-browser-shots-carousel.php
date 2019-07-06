@@ -241,13 +241,13 @@ class Browser_Shots_Carousel {
 		);
 		wp_print_styles( 'nivo-slider-theme' );
 
-		$direction_nav = ! empty( $direction_nav ) ? filter_var( $args['directionNav'], FILTER_VALIDATE_BOOLEAN ) : false;
+		$direction_nav = filter_var( $args['directionNav'] );
 		if ( $direction_nav ) {
 			$direction_nav = 'true';
 		} else {
 			$direction_nav = 'false';
 		}
-		$control_nav   = ! empty( $control_nav ) ? filter_var( $args['controlNav'], FILTER_VALIDATE_BOOLEAN ) : false;
+		$control_nav = filter_var( $args['controlNav'], FILTER_VALIDATE_BOOLEAN );
 		if ( $control_nav ) {
 			$control_nav = 'true';
 		} else {

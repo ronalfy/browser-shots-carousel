@@ -175,7 +175,7 @@ class Browser_Shots_Carousel extends Component {
 		const htmlToReactParser = new HtmlToReactParser();
 		const { width, height, slides } = this.props.attributes;
 		return ( slides.map((el, i) =>
-				<img src={ 'https://s0.wordpress.com/mshots/v1/' + encodeURI( this.state.slides[i].title ) + `?w=${width}&h=${height}&version=${this.state.version}`} alt={`${this.props.attributes.alt}`} width={`${width}`} height={`${height}`} title={this.state.slides[i]['caption']} />
+				<img src={ 'https://s0.wordpress.com/mshots/v1/' + encodeURI( this.state.slides[i].title ) + `?w=${width}&h=${height}&version=${this.state.version}`} alt={`${this.props.attributes.alt}`} width={`${width}`} height={`${height}`} title={this.state.slides[i]['caption']} key={i} />
 		 ) );
 	};
 
@@ -372,7 +372,7 @@ class Browser_Shots_Carousel extends Component {
 				</PanelBody>
 
 				<PanelBody title={__( 'Slider Settings', 'browser-shots' )} initialOpen={false}>
-
+				<p><em>{__('This is previewed using the default theme with bullets and navigation available. You can change these on the front-end by adjusting your slider settings.', 'browser-shots-carousel' )}</em></p>
 				<SelectControl
 					label={ __( 'Theme', 'wp-plugin-info-card' ) }
 					options={ themeOptions }
@@ -547,11 +547,10 @@ class Browser_Shots_Carousel extends Component {
 						>
 							<div className="section slideshow">
 								<div className="slider-wrapper theme-default">
-									<div class="ribbon"></div>
+									<div className="ribbon"></div>
 									<div id="bsc-slideshow" className="nivoSlider">
 										{this.createPreviewImage()}
 										{loadjs(browser_shots_nivo.location, () => {})}
-										<p><em>{__('This is previewed using the default theme with bullets and navigation available. You can change these on the front-end by adjusting your slider settings.', 'browser-shots-carousel' )}</em></p>
 									</div>
 								</div>
 							</div>

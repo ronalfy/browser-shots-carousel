@@ -485,7 +485,6 @@ class Browser_Shots_Carousel extends Component {
 							<div>
 								<input
 									className="button button-secondary"
-									style={{ marginTop: '25px' }}
 									type="submit" id="browsershots-input-submit"
 									value={__( 'Add Slide', 'browser-shots-carousel' )}
 									onClick={
@@ -494,9 +493,10 @@ class Browser_Shots_Carousel extends Component {
 										}
 									}
 								/>
+								<br />
 								<input
 									className="button button-primary"
-									style={{ marginTop: '25px' }}
+									style={{ marginTop: '25px', width: '100%' }}
 									type="submit" id="browsershots-input-preview"
 									value={__( 'Preview', 'browser-shots-carousel' )}
 									onClick={

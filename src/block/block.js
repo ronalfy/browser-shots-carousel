@@ -47,15 +47,6 @@ registerBlockType( 'browser-shots/browser-shots-carousel', {
 	supports: {
 		align: [ 'left', 'center', 'right' ],
 	},
-
-	/**
-	 * The edit function describes the structure of your block in the context of the editor.
-	 * This represents what the editor will render when the block is used.
-	 *
-	 * The "edit" property must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
 	edit: edit,
 	save() {
 		return null;

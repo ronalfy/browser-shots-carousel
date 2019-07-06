@@ -7,9 +7,6 @@ const { Component, Fragment } = wp.element;
 
 const { __, _x } = wp.i18n;
 
-const HtmlToReactParser = require( 'html-to-react' ).Parser;
-
-
 const {
 	PanelBody,
 	SelectControl,
@@ -170,7 +167,6 @@ class Browser_Shots_Carousel extends Component {
 	 * simply has enough info to preview what will be output.
 	 */
 	createPreviewImage = () => {
-		const htmlToReactParser = new HtmlToReactParser();
 		const { width, height, slides } = this.props.attributes;
 		return ( slides.map((el, i) =>
 				<img src={ 'https://s0.wordpress.com/mshots/v1/' + encodeURI( this.state.slides[i].title ) + `?w=${width}&h=${height}&version=${this.state.version}`} alt={`${this.props.attributes.alt}`} width={`${width}`} height={`${height}`} title={this.state.slides[i]['caption']} key={i} />

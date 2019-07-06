@@ -312,8 +312,8 @@ class Browser_Shots_Carousel {
 			jQuery( document ).ready( function($ ) {
 				jQuery( '#bsc-slideshow').nivoSlider({
 					effect: '<?php echo esc_js( $args['effect'] ); ?>',
-					directionNav: <?php echo $direction_nav; ?>,
-					controlNav: <?php echo $direction_nav; ?>,
+					directionNav: <?php echo esc_js( $direction_nav ); ?>,
+					controlNav: <?php echo esc_js( $direction_nav ); ?>,
 				} );
 			} );
 		</script>

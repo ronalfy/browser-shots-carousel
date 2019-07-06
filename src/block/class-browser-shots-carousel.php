@@ -156,10 +156,6 @@ class Browser_Shots_Carousel {
 						'type'    => 'string',
 						'default' => '',
 					),
-					'items'          => array(
-						'type'    => 'array',
-						'default' => [],
-					),
 					'width'        => array(
 						'type'    => 'int',
 						'default' => 600,
@@ -229,21 +225,26 @@ class Browser_Shots_Carousel {
 			'slides'       => $attributes['slides'],
 			'theme'        => $attributes['theme'],
 			'effect'       => $attributes['effect'],
+			'lightbox'     => $attributes['lightbox'],
 			'directionNav' => $attributes['directionNav'],
 			'controlNav'   => $attributes['controlNav'],
 			'width'        => absint( $attributes['width'] ),
 			'height'       => absint( $attributes['height'] ),
-			'link'         => ! empty( $attributes['link'] ) ? esc_url_raw( $attributes['link'] ) : '',
 			'target'       => sanitize_text_field( $attributes['target'] ),
 			'class'        => sanitize_text_field( $attributes['classname'] ),
 			'image_class'  => sanitize_text_field( isset( $attributes['align'] ) ? 'align' . $attributes['align'] : 'alignnone' ),
 			'rel'          => sanitize_text_field( $attributes['rel'] ),
 			'display_link' => (bool) $attributes['display_link'],
-			'post_links'   => (bool) $attributes['post_links'],
 		);
 
+		// Setup link and lightbox options.
+		$show_link     = filter_var( $args['display_link'], FILTER_VALIDATE_BOOLEAN );
+		$show_lightbox = filter_var( $args['lightbox'], FILTER_VALIDATE_BOOLEAN );
+
 		wp_enqueue_script( 'nivo-slider' );
-		wp_enqueue_script( 'fancybox' );
+		if ( $show_lightbox ) {
+			wp_enqueue_script( 'fancybox' );
+		}
 		wp_print_styles( 'nivo-slider' );
 		wp_register_style(
 			'nivo-slider-theme', // Handle.
@@ -252,17 +253,20 @@ class Browser_Shots_Carousel {
 			BROWSER_SHOTS_CAROUSEL_VERSION,
 			'all' // Enqueue the script in the footer.
 		);
-		wp_register_style(
-			'fancybox', // Handle.
-			BROWSER_SHOTS_CAROUSEL_URL . 'src/fancybox.css',
-			array(),
-			BROWSER_SHOTS_CAROUSEL_VERSION,
-			'all' // Enqueue the script in the footer.
-		);
 		wp_print_styles( 'nivo-slider-theme' );
-		wp_print_styles( 'fancybox' );
+		if ( $show_lightbox ) {
+			wp_register_style(
+				'fancybox', // Handle.
+				BROWSER_SHOTS_CAROUSEL_URL . 'src/fancybox.css',
+				array(),
+				BROWSER_SHOTS_CAROUSEL_VERSION,
+				'all' // Enqueue the script in the footer.
+			);
+			wp_print_styles( 'fancybox' );
+		}
 
-		$direction_nav = filter_var( $args['directionNav'] );
+		// Set up direction nav and bullets.
+		$direction_nav = filter_var( $args['directionNav'], FILTER_VALIDATE_BOOLEAN );
 		if ( $direction_nav ) {
 			$direction_nav = 'true';
 		} else {
@@ -284,9 +288,22 @@ class Browser_Shots_Carousel {
 						'https://s0.wordpress.com/mshots/v1/%s?w=1280&h=960',
 						rawurlencode( $slide['title'] )
 					);
+					$href    = $show_link ? $slide['title'] : $img_url;
 					?>
-					<a data-fancybox-trigger="gallery" data-fancybox="gallery" data-caption="<?php echo esc_attr( $slide['caption'] ); ?>" href="<?php echo esc_url_raw( $img_url ); ?>"><img src='https://s0.wordpress.com/mshots/v1/<?php echo rawurlencode( $slide['title'] ); ?>?w=<?php echo absint( $args['width'] ); ?>&h=<?php echo absint( $args['height'] ); ?>' width="<?php echo absint( $args['width'] ); ?>" height="<?php echo absint( $args['height'] ); ?>" title="<?php echo esc_attr( $slide['caption'] ); ?>" /></a>
 					<?php
+					if ( $show_link || $show_lightbox ) :
+						?>
+						<a data-fancybox-trigger="gallery" data-fancybox="gallery" data-caption="<?php echo esc_attr( $slide['caption'] ); ?>" href="<?php echo esc_url_raw( $href ); ?>" target="<?php echo esc_attr( $args['target'] ); ?>" rel="<?php echo esc_attr( $args['rel'] ); ?>">
+						<?php
+					endif;
+					?>
+					<img src='https://s0.wordpress.com/mshots/v1/<?php echo rawurlencode( $slide['title'] ); ?>?w=<?php echo absint( $args['width'] ); ?>&h=<?php echo absint( $args['height'] ); ?>' width="<?php echo absint( $args['width'] ); ?>" height="<?php echo absint( $args['height'] ); ?>" title="<?php echo esc_attr( $slide['caption'] ); ?>" />
+					<?php
+					if ( $show_link || $show_lightbox ) :
+						?>
+						</a>
+						<?php
+					endif;
 				}
 				?>
 			</div>

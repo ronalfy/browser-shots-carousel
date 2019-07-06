@@ -238,7 +238,6 @@ class Browser_Shots_Carousel {
 			'post_links'   => (bool) $attributes['post_links'],
 		);
 
-
 		wp_enqueue_script( 'nivo-slider' );
 		wp_enqueue_script( 'fancybox' );
 		wp_print_styles( 'nivo-slider' );
@@ -272,7 +271,7 @@ class Browser_Shots_Carousel {
 			$control_nav = 'false';
 		}
 		?>
-		<div class="slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?>">
+		<div class="slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?> <?php echo esc_attr( $args['image_class'] ); ?>" style="width: <?php echo absint( $args['width'] ); ?>px; height: auto;">
 			<div class="ribbon"></div>
 			<div id="bsc-slideshow" class="nivoSlider">
 				<?php

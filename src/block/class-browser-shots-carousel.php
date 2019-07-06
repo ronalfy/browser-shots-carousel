@@ -144,6 +144,10 @@ class Browser_Shots_Carousel {
 						'type'    => 'boolean',
 						'default' => true,
 					),
+					'lightbox'     => array(
+						'type'    => 'boolean',
+						'default' => true,
+					),
 					'slides'       => array(
 						'type'    => 'array',
 						'default' => '',
@@ -186,7 +190,7 @@ class Browser_Shots_Carousel {
 					),
 					'display_link' => array(
 						'type'    => 'boolean',
-						'default' => true,
+						'default' => false,
 					),
 					'image_size'   => array(
 						'type'    => 'string',

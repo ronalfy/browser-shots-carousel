@@ -43,20 +43,17 @@ class Browser_Shots_Carousel extends Component {
 			slides: this.props.attributes.slides || [''],
 			directionNav: this.props.attributes.directionNav,
 			controlNav: this.props.attributes.controlNav,
+			lightbox: this.props.attributes.lightbox,
 			welcome: true,
 			version: '1',
-			url: this.props.attributes.url,
 			width: this.props.attributes.width,
 			height: this.props.attributes.height,
-			alt: this.props.attributes.alt,
 			link: this.props.attributes.link,
 			target: this.props.attributes.target,
-			classname: this.props.attributes.classname,
 			rel: this.props.attributes.rel,
 			image_class: this.props.attributes.image_class,
 			image_size: this.props.attributes.image_size,
 			display_link: 'undefined' === typeof this.props.attributes.display_link ? true : this.props.attributes.display_link,
-			post_links: 'undefined' === typeof this.props.attributes.post_links ? false : this.props.attributes.post_links,
 		};
 		this.props.attributes.slides = this.state.slides;
 
@@ -181,7 +178,7 @@ class Browser_Shots_Carousel extends Component {
 
 	render() {
 		const { attributes } = this.props;
-		const { effect, directionNav, controlNav, theme, width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
+		const { effect, directionNav, controlNav, lightbox, theme, width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
 
 		const relOptions = [
 			{
@@ -412,6 +409,16 @@ class Browser_Shots_Carousel extends Component {
 						}
 						checked={this.state.controlNav}
 					/>
+					<ToggleControl
+						label={__( 'Pop images in a lightbox', 'browser-shots' )}
+						onChange={
+							( value ) => {
+								this.props.setAttributes( { lightbox: value } );
+								this.setState( { lightbox: value } );
+							}
+						}
+						checked={this.state.lightbox}
+					/>
 				</PanelBody>
 
 				<PanelBody title={__( 'Link Settings', 'browser-shots' )} initialOpen={false}>
@@ -427,33 +434,6 @@ class Browser_Shots_Carousel extends Component {
 						checked={this.state.display_link}
 					/>
 
-					{this.state.display_link &&
-						<ToggleControl
-							label={__( 'Link to the current post', 'browser-shots' )}
-							onChange={
-								( post_links ) => {
-									this.props.setAttributes( { post_links } );
-									this.setState( { post_links } );
-								}
-							}
-							checked={this.state.post_links}
-						/>
-					}
-
-					{this.state.display_link && !post_links &&
-						<TextControl
-							label={__( 'Link Image to URL', 'browser-shots' )}
-							type="text"
-							placeholder={this.state.url}
-							value={link}
-							onChange={( value ) => { this.props.setAttributes( { link: value } ); }}
-							help={
-								<div>
-									{__( 'By default the image links to the screenshot url.', 'browser-shots' )}
-								</div>
-							}
-						/>
-					}
 					{this.state.display_link &&
 						<Fragment>
 							<ToggleControl

@@ -1,10 +1,14 @@
 /**
  * External dependencies
  */
+import loadjs from 'loadjs';
 
 const { Component, Fragment } = wp.element;
 
 const { __, _x } = wp.i18n;
+
+const HtmlToReactParser = require( 'html-to-react' ).Parser;
+
 
 const {
 	PanelBody,
@@ -36,9 +40,9 @@ class Browser_Shots_Carousel extends Component {
 		super( ...arguments );
 
 		this.state = {
-			slides: [''],
+			slides: this.props.attributes.slides || [''],
 			html: this.props.attributes.html,
-			welcome: '' === this.props.attributes.url ? true : false,
+			welcome: true,
 			version: '1',
 			url: this.props.attributes.url,
 			width: this.props.attributes.width,
@@ -56,6 +60,7 @@ class Browser_Shots_Carousel extends Component {
 		this.props.attributes.slides = this.state.slides;
 
 	};
+
 
 
 	/**
@@ -101,7 +106,7 @@ class Browser_Shots_Carousel extends Component {
 				<label>{__( 'Enter a URL', 'browser-shots-carousel' )}
 					<input
 						type="text"
-						value={this.props.attributes.slides[i]['title']||''}
+						value={ undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].title : ''}
 						placeholder = "http://"
 						onChange={this.handleChange.bind(this, i)}
 					/>
@@ -110,7 +115,7 @@ class Browser_Shots_Carousel extends Component {
 					tagName="div"
 					className='wp-caption-text'
 					placeholder={__( 'Write caption...', 'browser-shots' )}
-					value={this.props.attributes.slides[i]['caption']||''}
+					value={undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].caption : ''}
 					onChange={this.handleCaptionChange.bind(this, i)}
 				/>
 				<input type='button' value='remove' onClick={this.removeClick.bind(this, i)} />
@@ -137,9 +142,10 @@ class Browser_Shots_Carousel extends Component {
 		if ( slides.length == 0 ) {
 			return;
 		}
-		slides[i]['caption'] = event || '';
+		slides[i] = { caption : event || '', title: slides[i].title || '' };
+		this.props.setAttributes( { slides: slides } );
 		this.setState({ slides });
-		this.props.slides = slides;
+
 	}
 
 	handleChange = (i, event) => {
@@ -150,9 +156,9 @@ class Browser_Shots_Carousel extends Component {
 		if ( slides.length == 0 ) {
 			return;
 		}
-		slides[i]['title'] = event || '';
+		slides[i] = { title: event.target.value || '', caption: slides[i].caption || '' };
+		this.props.setAttributes( { slides: slides } );
 		this.setState({ slides });
-		this.props.slides = slides;
 	}
 
 
@@ -163,25 +169,17 @@ class Browser_Shots_Carousel extends Component {
 	 * simply has enough info to preview what will be output.
 	 */
 	createPreviewImage = () => {
-
-		const { width, height, url } = this.props.attributes;
-		let mshotsUrl = `https://s0.wordpress.com/mshots/v1/${encodeURI( url )}?w=${width}&h=${height}&version=${this.state.version}`;
-
-		return (
-			<div>
-				<img src={mshotsUrl} alt={this.props.attributes.alt} width={width} height={height} />
-			</div>
-		);
-
+		const htmlToReactParser = new HtmlToReactParser();
+		const { width, height, slides } = this.props.attributes;
+		return ( slides.map((el, i) =>
+				<img src={ 'https://s0.wordpress.com/mshots/v1/' + encodeURI( this.state.slides[i].title ) + `?w=${width}&h=${height}&version=${this.state.version}`} alt={`${this.props.attributes.alt}`} width={`${width}`} height={`${height}`} title={this.state.slides[i]['caption']} />
+		 ) );
 	};
 
 
 	render() {
-
 		const { attributes } = this.props;
-		const { width, items, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
-
-		attributes.slides = this.state.slides;
+		const { slides, width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
 
 		const relOptions = [
 			{
@@ -447,13 +445,24 @@ class Browser_Shots_Carousel extends Component {
 							{this.showSlides()}
 							<div>
 								<input
-									className="button button-primary"
+									className="button button-secondary"
 									style={{ marginTop: '25px' }}
 									type="submit" id="browsershots-input-submit"
 									value={__( 'Add Slide', 'browser-shots-carousel' )}
 									onClick={
 										( e ) => {
 											this.addClick();
+										}
+									}
+								/>
+								<input
+									className="button button-primary"
+									style={{ marginTop: '25px' }}
+									type="submit" id="browsershots-input-preview"
+									value={__( 'Preview', 'browser-shots-carousel' )}
+									onClick={
+										( e ) => {
+											this.setState( { welcome: false } );
 										}
 									}
 								/>
@@ -478,14 +487,15 @@ class Browser_Shots_Carousel extends Component {
 								}
 							}
 						>
-							{this.createPreviewImage()}
-							<RichText
-								tagName="div"
-								className='wp-caption-text'
-								placeholder={__( 'Write caption...', 'browser-shots' )}
-								value={content}
-								onChange={( content ) => this.props.setAttributes( { content: content } )}
-							/>
+							<div className="section slideshow">
+								<div className="slider-wrapper theme-default">
+									<div class="ribbon"></div>
+									<div id="bsc-slideshow" className="nivoSlider">
+										{this.createPreviewImage()}
+										{loadjs(browser_shots_nivo.location, () => {})}
+									</div>
+								</div>
+							</div>
 						</div>
 					</Fragment>
 				}

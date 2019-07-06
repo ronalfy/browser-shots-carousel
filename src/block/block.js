@@ -11,6 +11,7 @@ import './editor.scss';
 
 import edit from './edit';
 
+
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 
@@ -43,6 +44,9 @@ registerBlockType( 'browser-shots/browser-shots-carousel', {
 		__( 'website', 'browser-shots-carousel' ),
 		__( 'screenshot', 'browser-shots-carousel' )
 	],
+	supports: {
+		align: [ 'left', 'center', 'right' ],
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.

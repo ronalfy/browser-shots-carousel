@@ -1,15 +1,45 @@
-/**
- * #.# Editor Styles
- *
- * CSS for just Backend enqueued after style.scss
- * which makes it higher in priority.
- */
+.browser-shots-gutenberg-wrapper:after {
 
-.wp-block-cgb-block-browser-shots-carousel  {
-  background: $green;
-  border: 0.2rem solid $black;
-  color: $black;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
+	content: "";
+	display: table;
+	clear: both;
+
+}
+
+.browsershots-block {
+
+	text-align: center;
+
+	input[type="text"] {
+		width: 300px;
+		text-align: center;
+	}
+
+	input[type="submit"] {
+		font-size: 18px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		height: auto;
+	}
+
+}
+
+.browser-shots-dimensions {
+
+	align-items: flex-start;
+	flex-wrap: wrap;
+
+	.components-base-control {
+		width: 48%;
+		margin-bottom: 0 !important;
+	}
+
+	.components-base-control__field {
+		margin-bottom: 0 !important;
+	}
+
+}
+
+.browser-shots-dimensions-options {
+	margin-bottom: 20px;
 }

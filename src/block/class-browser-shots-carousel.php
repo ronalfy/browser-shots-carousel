@@ -56,6 +56,38 @@ class Browser_Shots_Carousel {
 			true // Enqueue the script in the footer.
 		);
 
+		// Register Nivo Slider for front and backend.
+		wp_register_script(
+			'nivo-slider', // Handle.
+			BROWSER_SHOTS_CAROUSEL_URL . 'src/jquery.nivo.slider.pack.js',
+			array( 'jquery' ),
+			BROWSER_SHOTS_CAROUSEL_VERSION,
+			true // Enqueue the script in the footer.
+		);
+		wp_localize_script(
+			'nivo-slider',
+			'browser_shots_nivo',
+			array(
+				'location' => BROWSER_SHOTS_CAROUSEL_URL . 'src/nivo-slider-init.js',
+			)
+		);
+
+		// Register Nivo Slider for front and backend.
+		wp_register_style(
+			'nivo-slider', // Handle.
+			BROWSER_SHOTS_CAROUSEL_URL . 'src/nivo-slider.css',
+			BROWSER_SHOTS_CAROUSEL_VERSION,
+			'all' // Enqueue the script in the footer.
+		);
+
+		// Register Nivo Slider Theme
+		wp_register_style(
+			'nivo-slider-theme-default', // Handle.
+			BROWSER_SHOTS_CAROUSEL_URL . 'src/themes/default/default.css',
+			BROWSER_SHOTS_CAROUSEL_VERSION,
+			'all' // Enqueue the script in the footer.
+		);
+
 		wp_set_script_translations( 'browser_shots_carousel', 'browser-shots-carousel' );
 
 		// Register block editor styles for backend.
@@ -82,13 +114,13 @@ class Browser_Shots_Carousel {
 				// Enqueue blocks.style.build.css on both frontend & backend.
 				'style'           => 'browser_shots_carousel',
 				// Enqueue blocks.build.js in the editor only.
-				'editor_script'   => 'browser_shots_carousel',
+				'editor_script'   => array( 'browser_shots_carousel', 'nivo-slider' ),
 				// Enqueue blocks.editor.build.css in the editor only.
-				'editor_style'    => 'browser_shots_carousel_editor',
+				'editor_style'    => array( 'browser_shots_carousel_editor', 'nivo-slider', 'nivo-slider-theme-default' ),
 				'attributes'      => array(
 					'slides'       => array(
-						'type'    => 'query',
-						'default' => '[]',
+						'type'    => 'array',
+						'default' => '',
 					),
 					'html'         => array(
 						'type'    => 'string',

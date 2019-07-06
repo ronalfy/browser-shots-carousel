@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'BROWSER_SHOTS_CAROUSEL_PLUGIN_NAME', 'Browser Shots Carousel' );
 define( 'BROWSER_SHOTS_CAROUSEL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BROWSER_SHOTS_CAROUSEL_URL', plugins_url( '/', __FILE__ ) );
-define( 'BROWSER_SHOTS_CAROUSEL_VERSION', '1.0.1' );
+define( 'BROWSER_SHOTS_CAROUSEL_VERSION', '1.0.2' );
 define( 'BROWSER_SHOTS_CAROUSEL_SLUG', plugin_basename( __FILE__ ) );
 define( 'BROWSER_SHOTS_CAROUSEL_FILE', __FILE__ );
 

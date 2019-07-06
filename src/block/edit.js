@@ -41,6 +41,8 @@ class Browser_Shots_Carousel extends Component {
 
 		this.state = {
 			slides: this.props.attributes.slides || [''],
+			directionNav: this.props.attributes.directionNav,
+			controlNav: this.props.attributes.controlNav,
 			html: this.props.attributes.html,
 			welcome: true,
 			version: '1',
@@ -103,23 +105,24 @@ class Browser_Shots_Carousel extends Component {
 	showSlides = () => {
 		return ( this.state.slides.map((el, i) =>
 			<div key={i}>
-				<label>{__( 'Enter a URL', 'browser-shots-carousel' )}
-					<input
-						type="text"
-						value={ undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].title : ''}
-						placeholder = "http://"
-						onChange={this.handleChange.bind(this, i)}
+				<div className="browser-shots-carousel-input-row">
+					<label>{__( 'Enter a URL', 'browser-shots-carousel' )}
+						<br />
+						<input
+							type="text"
+							value={ undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].title : ''}
+							placeholder = "http://"
+							onChange={this.handleChange.bind(this, i)}
+						/> <input type='button' value='remove' onClick={this.removeClick.bind(this, i)} />
+					</label>
+					<RichText
+						tagName="div"
+						className='wp-caption-text'
+						placeholder={__( 'Write caption...', 'browser-shots' )}
+						value={undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].caption : ''}
+						onChange={this.handleCaptionChange.bind(this, i)}
 					/>
-				</label>
-				<RichText
-					tagName="div"
-					className='wp-caption-text'
-					placeholder={__( 'Write caption...', 'browser-shots' )}
-					value={undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].caption : ''}
-					onChange={this.handleCaptionChange.bind(this, i)}
-				/>
-				<input type='button' value='remove' onClick={this.removeClick.bind(this, i)} />
-
+				</div>
 			</div>
 		) );
 	}
@@ -179,7 +182,7 @@ class Browser_Shots_Carousel extends Component {
 
 	render() {
 		const { attributes } = this.props;
-		const { slides, width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
+		const { effect, directionNav, controlNav, theme, width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
 
 		const relOptions = [
 			{
@@ -190,6 +193,31 @@ class Browser_Shots_Carousel extends Component {
 				value: 'nofollow',
 				label: __( 'No Follow', 'browser-shots' )
 			}
+		];
+
+		const themeOptions = [
+			{ value: 'default', label: __( 'Default', 'browser-shots-carousel' ) },
+			{ value: 'bar', label: __( 'Bar', 'browser-shots-carousel' ) },
+			{ value: 'dark', label: __( 'Dark', 'browser-shots-carousel' ) },
+			{ value: 'light', label: __( 'Light', 'browser-shots-carousel' ) },
+		];
+
+		const effectOptions = [
+			{ value: 'sliceDown', label: __( 'Slide Down', 'browser-shots-carousel' ) },
+			{ value: 'sliceDownLeft', label: __( 'Slide Down Left', 'browser-shots-carousel' ) },
+			{ value: 'sliceUp', label: __( 'Slice Up', 'browser-shots-carousel' ) },
+			{ value: 'sliceUpLeft', label: __( 'Slice Up Left', 'browser-shots-carousel' ) },
+			{ value: 'sliceUpDown', label: __( 'Slice Up Down', 'browser-shots-carousel' ) },
+			{ value: 'sliceUpDownLeft', label: __( 'Slice Up Down Left', 'browser-shots-carousel' ) },
+			{ value: 'fold', label: __( 'Fold', 'browser-shots-carousel' ) },
+			{ value: 'fade', label: __( 'Fade', 'browser-shots-carousel' ) },
+			{ value: 'random', label: __( 'Random', 'browser-shots-carousel' ) },
+			{ value: 'slideInRight', label: __( 'Slide In Right', 'browser-shots-carousel' ) },
+			{ value: 'slideInLeft', label: __( 'Slide In Left', 'browser-shots-carousel' ) },
+			{ value: 'boxRandom', label: __( 'Box Random', 'browser-shots-carousel' ) },
+			{ value: 'boxRain', label: __( 'Box Rain', 'browser-shots-carousel' ) },
+			{ value: 'boxRainGrow', label: __( 'Box Rain Grow', 'browser-shots-carousel' ) },
+			{ value: 'boxRainGrowReverse', label: __( 'Box Rain Grow Reverse', 'browser-shots-carousel' ) },
 		];
 
 		const resetSelect = [
@@ -210,20 +238,6 @@ class Browser_Shots_Carousel extends Component {
 			<InspectorControls>
 
 				<PanelBody title={__( 'Browser Shots Settings', 'browser-shots' )}>
-
-					<TextareaControl
-						label={__( 'Alt Text (Alternative Text)' )}
-						value={alt}
-						onChange={( value ) => { this.props.setAttributes( { alt: value } ); }}
-						help={
-							<div>
-								<ExternalLink href="https://www.w3.org/WAI/tutorials/images/decision-tree">
-									{__( 'Describe the purpose of the image', 'browser-shots' )}
-								</ExternalLink>
-								{__( 'Leave empty if the image is purely decorative.', 'browser-shots' )}
-							</div>
-						}
-					/>
 
 					<p>{__( 'Image Dimensions', 'browser-shots' )}</p>
 					<PanelRow className="browser-shots-dimensions">
@@ -355,6 +369,50 @@ class Browser_Shots_Carousel extends Component {
 						{__( 'Refresh Image', 'browser-shots' )}
 					</Button>
 
+				</PanelBody>
+
+				<PanelBody title={__( 'Slider Settings', 'browser-shots' )} initialOpen={false}>
+
+				<SelectControl
+					label={ __( 'Theme', 'wp-plugin-info-card' ) }
+					options={ themeOptions }
+					value={ theme }
+					onChange={ ( value ) => {
+						this.props.setAttributes( { theme: value } );
+						this.props.attributes.theme = value;
+						this.setState( { theme: value } );
+					} }
+				/>
+				<SelectControl
+					label={ __( 'Effect', 'wp-plugin-info-card' ) }
+					options={ effectOptions }
+					value={ effect }
+					onChange={ ( value ) => {
+						this.props.setAttributes( { effect: value } );
+						this.props.attributes.effect = value;
+						this.setState( { effect: value } );
+					} }
+				/>
+				<ToggleControl
+					label={__( 'Allow Next/Prev Nav', 'browser-shots' )}
+					onChange={
+						( value ) => {
+							this.props.setAttributes( { directionNav: value } );
+							this.setState( { directionNav: value } );
+						}
+					}
+					checked={this.state.directionNav}
+				/>
+				<ToggleControl
+					label={__( 'Allow Bullets', 'browser-shots' )}
+					onChange={
+						( value ) => {
+							this.props.setAttributes( { controlNav: value } );
+							this.setState( { controlNav: value } );
+						}
+					}
+					checked={this.state.controlNav}
+				/>
 				</PanelBody>
 
 				<PanelBody title={__( 'Link Settings', 'browser-shots' )} initialOpen={false}>
@@ -493,6 +551,7 @@ class Browser_Shots_Carousel extends Component {
 									<div id="bsc-slideshow" className="nivoSlider">
 										{this.createPreviewImage()}
 										{loadjs(browser_shots_nivo.location, () => {})}
+										<p><em>{__('This is previewed using the default theme with bullets and navigation available. You can change these on the front-end by adjusting your slider settings.', 'browser-shots-carousel' )}</em></p>
 									</div>
 								</div>
 							</div>

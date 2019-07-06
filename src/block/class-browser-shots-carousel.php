@@ -84,6 +84,7 @@ class Browser_Shots_Carousel {
 		wp_register_style(
 			'nivo-slider-theme-default', // Handle.
 			BROWSER_SHOTS_CAROUSEL_URL . 'src/themes/default/default.css',
+			array(),
 			BROWSER_SHOTS_CAROUSEL_VERSION,
 			'all' // Enqueue the script in the footer.
 		);
@@ -118,6 +119,22 @@ class Browser_Shots_Carousel {
 				// Enqueue blocks.editor.build.css in the editor only.
 				'editor_style'    => array( 'browser_shots_carousel_editor', 'nivo-slider', 'nivo-slider-theme-default' ),
 				'attributes'      => array(
+					'theme'        => array(
+						'type'    => 'string',
+						'default' => 'default',
+					),
+					'effect'       => array(
+						'type'    => 'string',
+						'default' => 'random',
+					),
+					'directionNav' => array(
+						'type'    => 'boolean',
+						'default' => true,
+					),
+					'controlNav'   => array(
+						'type'    => 'boolean',
+						'default' => true,
+					),
 					'slides'       => array(
 						'type'    => 'array',
 						'default' => '',
@@ -196,10 +213,13 @@ class Browser_Shots_Carousel {
 		}
 
 		$args = array(
-			'url'          => esc_url_raw( $attributes['url'] ),
+			'slides'       => $attributes['slides'],
+			'theme'        => $attributes['theme'],
+			'effect'       => $attributes['effect'],
+			'directionNav' => (bool) $attributes['directionNav'],
+			'controlNav'   => (bool) $attributes['controlNav'],
 			'width'        => absint( $attributes['width'] ),
 			'height'       => absint( $attributes['height'] ),
-			'alt'          => sanitize_text_field( $attributes['alt'] ),
 			'link'         => ! empty( $attributes['link'] ) ? esc_url_raw( $attributes['link'] ) : '',
 			'target'       => sanitize_text_field( $attributes['target'] ),
 			'class'        => sanitize_text_field( $attributes['classname'] ),
@@ -209,10 +229,43 @@ class Browser_Shots_Carousel {
 			'post_links'   => (bool) $attributes['post_links'],
 		);
 
-		$content = ( isset( $attributes['content'] ) && ! empty( $attributes['content'] ) ) ? wp_kses_post( $attributes['content'] ) : '';
+		wp_enqueue_script( 'nivo-slider' );
+		wp_print_styles( 'nivo-slider' );
+		wp_register_style(
+			'nivo-slider-theme', // Handle.
+			BROWSER_SHOTS_CAROUSEL_URL . 'src/themes/' . $args['theme'] . '/' . $args['theme'] . '.css',
+			array(),
+			BROWSER_SHOTS_CAROUSEL_VERSION,
+			'all' // Enqueue the script in the footer.
+		);
+		wp_print_styles( 'nivo-slider-theme' );
 
-		$browsershots = new BrowserShots();
-		return wp_kses_post( $browsershots->shortcode( $args, $content ) );
+		$direction_nav = filter_var( $args['directionNav'], FILTER_VALIDATE_BOOLEAN );
+		$control_nav   = filter_var( $args['controlNav'], FILTER_VALIDATE_BOOLEAN );
+		?>
+		<div class="slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?>">
+			<div class="ribbon"></div>
+			<div id="bsc-slideshow" class="nivoSlider">
+				<?php
+				foreach ( $args['slides'] as $slide ) {
+					?>
+					<img src='https://s0.wordpress.com/mshots/v1/<?php echo rawurlencode( $slide['title'] ); ?>?w=<?php echo absint( $args['width'] ); ?>&h=<?php echo absint( $args['height'] ); ?>' width="<?php echo absint( $args['width'] ); ?>" height="<?php echo absint( $args['height'] ); ?>" title="<?php echo esc_attr( $slide['caption'] ); ?>" />
+					<?php
+				}
+				?>
+			</div>
+		</div>
+		<script>
+			jQuery( document ).ready( function($ ) {
+				jQuery( '#bsc-slideshow').nivoSlider({
+					effect: '<?php echo esc_js( $args['effect'] ); ?>',
+					directionNav: <?php echo esc_js( $args['directionNav'] ); ?>,
+					controlNav: <?php echo esc_js( $args['controlNav'] ); ?>,
+				} );
+			} );
+		</script>
+
+		<?php
 
 	}
 

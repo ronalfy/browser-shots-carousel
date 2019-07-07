@@ -41,6 +41,7 @@ class Browser_Shots_Carousel extends Component {
 			directionNav: this.props.attributes.directionNav,
 			controlNav: this.props.attributes.controlNav,
 			lightbox: this.props.attributes.lightbox,
+			align: this.props.attributes.align,
 			welcome: true,
 			version: '1',
 			width: this.props.attributes.width,
@@ -199,7 +200,7 @@ class Browser_Shots_Carousel extends Component {
 
 	render() {
 		const { attributes } = this.props;
-		const { effect, directionNav, controlNav, lightbox, theme, width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
+		const { effect, align, directionNav, controlNav, lightbox, theme, width, height, alt, link, target, rel, image_size, content, display_link, post_links } = attributes;
 
 		const relOptions = [
 			{
@@ -235,6 +236,12 @@ class Browser_Shots_Carousel extends Component {
 			{ value: 'boxRain', label: __( 'Box Rain', 'browser-shots-carousel' ) },
 			{ value: 'boxRainGrow', label: __( 'Box Rain Grow', 'browser-shots-carousel' ) },
 			{ value: 'boxRainGrowReverse', label: __( 'Box Rain Grow Reverse', 'browser-shots-carousel' ) },
+		];
+
+		const alignOptions = [
+			{ value: 'left', label: __( 'Align Left', 'browser-shots-carousel' ) },
+			{ value: 'center', label: __( 'Align Center', 'browser-shots-carousel' ) },
+			{ value: 'right', label: __( 'Align Right', 'browser-shots-carousel' ) },
 		];
 
 		const resetSelect = [
@@ -408,6 +415,16 @@ class Browser_Shots_Carousel extends Component {
 							this.props.setAttributes( { effect: value } );
 							this.props.attributes.effect = value;
 							this.setState( { effect: value } );
+						} }
+					/>
+					<SelectControl
+						label={ __( 'Align', 'wp-plugin-info-card' ) }
+						options={ alignOptions }
+						value={ align }
+						onChange={ ( value ) => {
+							this.props.setAttributes( { align: value } );
+							this.props.attributes.align = value;
+							this.setState( { align: value } );
 						} }
 					/>
 					<ToggleControl

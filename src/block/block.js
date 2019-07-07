@@ -44,9 +44,6 @@ registerBlockType( 'browser-shots/browser-shots-carousel', {
 		__( 'website', 'browser-shots-carousel' ),
 		__( 'screenshot', 'browser-shots-carousel' )
 	],
-	supports: {
-		align: [ 'left', 'center', 'right' ],
-	},
 	edit: edit,
 	save() {
 		return null;

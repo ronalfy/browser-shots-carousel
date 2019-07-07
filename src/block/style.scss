@@ -16,11 +16,17 @@
 	display: inline-block !important;
 	visibility: visible !important;
 }
-.slider-wrapper.aligncenter {
+.browser-shots-carousel-slider-wrapper.aligncenter {
 	margin: 0 auto !important;
+	max-width: 100% !important;
 }
-.slider-wrapper.alignleft {
+.browser-shots-carousel-slider-wrapper.alignleft {
 	margin: 0 auto 0 0 !important;
+	max-width: 100% !important;
+}
+.browser-shots-carousel-slider-wrapper.alignright {
+	margin: 0 0 0 auto !important;
+	max-width: 100% !important;
 }
 .nivo-caption {
 	text-align: center;

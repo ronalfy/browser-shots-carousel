@@ -161,11 +161,11 @@ class Browser_Shots_Carousel {
 					),
 					'width'        => array(
 						'type'    => 'int',
-						'default' => 600,
+						'default' => 1280,
 					),
 					'height'       => array(
 						'type'    => 'int',
-						'default' => 450,
+						'default' => 960,
 					),
 					'alt'          => array(
 						'type'    => 'string',
@@ -178,6 +178,10 @@ class Browser_Shots_Carousel {
 					'target'       => array(
 						'type'    => 'string',
 						'default' => '',
+					),
+					'align'        => array(
+						'type'    => 'string',
+						'default' => 'center',
 					),
 					'classname'    => array(
 						'type'    => 'string',
@@ -282,7 +286,7 @@ class Browser_Shots_Carousel {
 			$control_nav = 'false';
 		}
 		?>
-		<div class="slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?> <?php echo esc_attr( $args['image_class'] ); ?>" style="width: <?php echo absint( $args['width'] ); ?>px; height: auto;">
+		<div class="browser-shots-carousel-slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?> <?php echo esc_attr( $args['image_class'] ); ?>" style="width: <?php echo absint( $args['width'] ); ?>px; height: auto;">
 			<div class="ribbon"></div>
 			<div id="bsc-slideshow" class="nivoSlider">
 				<?php

@@ -13,7 +13,9 @@ Create a carousel for your Browser Screenshots
 
 == Description ==
 
-Browser Shots Carousel allows you to create a carousel from your screenshots using the Browser Shots service.
+Browser Shots Carousel is a Gutenberg block that allows you to create a carousel from your screenshots using the Browser Shots service.
+
+[youtube https://www.youtube.com/watch?v=-ib_polsSHU&rel=0]
 
 == Installation ==
 

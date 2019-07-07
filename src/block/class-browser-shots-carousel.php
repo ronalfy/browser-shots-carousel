@@ -151,6 +151,9 @@ class Browser_Shots_Carousel {
 					'slides'       => array(
 						'type'    => 'array',
 						'default' => array( '' ),
+						'items'   => [
+							'type' => 'object',
+						],
 					),
 					'html'         => array(
 						'type'    => 'string',

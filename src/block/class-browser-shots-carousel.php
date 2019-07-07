@@ -150,7 +150,7 @@ class Browser_Shots_Carousel {
 					),
 					'slides'       => array(
 						'type'    => 'array',
-						'default' => '',
+						'default' => array( '' ),
 					),
 					'html'         => array(
 						'type'    => 'string',
@@ -288,12 +288,18 @@ class Browser_Shots_Carousel {
 						'https://s0.wordpress.com/mshots/v1/%s?w=1280&h=960',
 						rawurlencode( $slide['title'] )
 					);
-					$href    = $show_link ? $slide['title'] : $img_url;
+					$href    = '';
+					if ( $show_link ) {
+						$href = empty( $slide['link'] ) ? $slide['title'] : $slide['link'];
+					}
+					if ( $show_lightbox ) {
+						$href = $img_url;
+					}
 					?>
 					<?php
 					if ( $show_link || $show_lightbox ) :
 						?>
-						<a data-fancybox-trigger="gallery" data-fancybox="gallery" data-caption="<?php echo esc_attr( $slide['caption'] ); ?>" href="<?php echo esc_url_raw( $href ); ?>" target="<?php echo esc_attr( $args['target'] ); ?>" rel="<?php echo esc_attr( $args['rel'] ); ?>">
+						<a <?php if ( $show_lightbox ) : ?> data-fancybox-trigger="gallery" data-fancybox="gallery" data-caption="<?php echo esc_attr( $slide['caption'] ); ?>" <?php endif; ?> href="<?php echo esc_url_raw( $href ); ?>" target="<?php echo esc_attr( $args['target'] ); ?>" rel="<?php echo esc_attr( $args['rel'] ); ?>">
 						<?php
 					endif;
 					?>

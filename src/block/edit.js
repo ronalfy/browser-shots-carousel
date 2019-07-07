@@ -112,12 +112,12 @@ class Browser_Shots_Carousel extends Component {
 		slides.splice(i,1);
 		this.props.setAttributes( { slides: slides } );
 		this.setState({ slides });
-	 }
+	}
 
-	 /**
-	  * Update the caption when it's changed.
-	  */
-	 handleCaptionChange = (i, event) => {
+	/**
+	 * Update the caption when it's changed.
+	 */
+	handleCaptionChange = (i, event) => {
 		if ( undefined == event ) {
 			return;
 		}

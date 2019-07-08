@@ -227,6 +227,7 @@ class Browser_Shots_Carousel {
 		if ( is_admin() || defined( 'REST_REQUEST' ) ) {
 			return;
 		}
+		ob_start();
 
 		$args = array(
 			'slides'       => $attributes['slides'],
@@ -286,8 +287,7 @@ class Browser_Shots_Carousel {
 			$control_nav = 'false';
 		}
 		?>
-		<div class="browser-shots-carousel-slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?> <?php echo esc_attr( $args['image_class'] ); ?>" style="width: <?php echo absint( $args['width'] ); ?>px; height: auto;">
-			<div class="ribbon"></div>
+		<div class="browser-shots-carousel-slider-wrapper theme-<?php echo esc_attr( $args['theme'] ); ?> <?php echo esc_attr( $args['image_class'] ); ?>" style="position: relative; width: <?php echo absint( $args['width'] ); ?>px; height: auto;">
 			<div id="bsc-slideshow" class="nivoSlider">
 				<?php
 				foreach ( $args['slides'] as $slide ) {
@@ -332,7 +332,7 @@ class Browser_Shots_Carousel {
 		</script>
 
 		<?php
-
+		return ob_get_clean();
 	}
 
 }

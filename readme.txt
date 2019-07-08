@@ -3,7 +3,7 @@ Contributors: ronalfy, BinaryMoon
 Tags: blocks, browser screenshots, carousel, browser shots
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 0.7.0
+Stable tag: 0.7.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -37,11 +37,18 @@ Nivo Slider
 
 == Changelog ==
 
+= 0.7.1 =
+* Released 2019-07-08
+* Fixed bug in Gutenberg output so the carousel shows in the right place.
+
 = 0.7.0 =
 * Released 2019-07-07
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.7.1 =
+Fixed bug in Gutenberg output so the carousel shows in the right place.
 
 = 0.7.0 =
 Initial release.

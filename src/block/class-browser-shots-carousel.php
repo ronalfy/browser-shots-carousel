@@ -210,7 +210,7 @@ class Browser_Shots_Carousel {
 						'type'    => 'boolean',
 						'default' => false,
 					),
-					'align'                  => array(
+					'align'        => array(
 						'type'    => 'string',
 						'default' => 'full',
 					),

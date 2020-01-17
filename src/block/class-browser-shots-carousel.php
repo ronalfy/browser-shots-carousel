@@ -14,6 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Browser shots Carousel Block initialization.
+ */
 class Browser_Shots_Carousel {
 
 	/**
@@ -89,7 +92,7 @@ class Browser_Shots_Carousel {
 			'all' // Enqueue the script in the footer.
 		);
 
-		// Register Nivo Slider Theme
+		// Register Nivo Slider Theme.
 		wp_register_style(
 			'nivo-slider-theme-default', // Handle.
 			BROWSER_SHOTS_CAROUSEL_URL . 'src/themes/default/default.css',
@@ -122,11 +125,11 @@ class Browser_Shots_Carousel {
 			'browser-shots/browser-shots-carousel',
 			array(
 				// Enqueue blocks.style.build.css on both frontend & backend.
-				'style'           => 'browser_shots_carousel',
+				'style'           => array( 'browser_shots_carousel', 'fancybox' ),
 				// Enqueue blocks.build.js in the editor only.
-				'editor_script'   => array( 'browser_shots_carousel', 'nivo-slider' ),
+				'editor_script'   => array( 'browser_shots_carousel', 'nivo-slider', 'fancybox' ),
 				// Enqueue blocks.editor.build.css in the editor only.
-				'editor_style'    => array( 'browser_shots_carousel_editor', 'nivo-slider', 'nivo-slider-theme-default' ),
+				'editor_style'    => array( 'browser_shots_carousel_editor', 'nivo-slider', 'nivo-slider-theme-default', 'fancybox' ),
 				'attributes'      => array(
 					'theme'        => array(
 						'type'    => 'string',
@@ -151,9 +154,9 @@ class Browser_Shots_Carousel {
 					'slides'       => array(
 						'type'    => 'array',
 						'default' => array( '' ),
-						'items'   => [
+						'items'   => array(
 							'type' => 'object',
-						],
+						),
 					),
 					'html'         => array(
 						'type'    => 'string',
@@ -203,9 +206,13 @@ class Browser_Shots_Carousel {
 						'type'    => 'string',
 						'default' => '',
 					),
-					'post_links'    => array(
+					'post_links'   => array(
 						'type'    => 'boolean',
 						'default' => false,
+					),
+					'align'                  => array(
+						'type'    => 'string',
+						'default' => 'full',
 					),
 				),
 				'render_callback' => array( $this, 'block_frontend' ),
@@ -306,7 +313,11 @@ class Browser_Shots_Carousel {
 					<?php
 					if ( $show_link || $show_lightbox ) :
 						?>
-						<a <?php if ( $show_lightbox ) : ?> data-fancybox-trigger="gallery" data-fancybox="gallery" data-caption="<?php echo esc_attr( $slide['caption'] ); ?>" <?php endif; ?> href="<?php echo esc_url_raw( $href ); ?>" target="<?php echo esc_attr( $args['target'] ); ?>" rel="<?php echo esc_attr( $args['rel'] ); ?>">
+						<a
+						<?php
+						if ( $show_lightbox ) :
+							?>
+							data-fancybox-trigger="gallery" data-fancybox="gallery" data-caption="<?php echo esc_attr( $slide['caption'] ); ?>" <?php endif; ?> href="<?php echo esc_url_raw( $href ); ?>" target="<?php echo esc_attr( $args['target'] ); ?>" rel="<?php echo esc_attr( $args['rel'] ); ?>">
 						<?php
 					endif;
 					?>

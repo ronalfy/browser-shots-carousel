@@ -52,6 +52,8 @@ class Browser_Shots_Carousel extends Component {
 			image_class: this.props.attributes.image_class,
 			image_size: this.props.attributes.image_size,
 			display_link: 'undefined' === typeof this.props.attributes.display_link ? true : this.props.attributes.display_link,
+			preview: false,
+			previewSlide: 0,
 		};
 		this.props.attributes.slides = this.state.slides;
 
@@ -78,23 +80,23 @@ class Browser_Shots_Carousel extends Component {
 			<div key={i}>
 				<div className="browser-shots-carousel-input-row" style={{position: 'relative'}}>
 					<div>
-						<label>{__( 'Image Url', 'browser-shots-carousel' )}
+						<label>{__( 'URL to Preview', 'browser-shots-carousel' )}
 							<br />
 							<input
 								type="text"
 								value={ undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].title : ''}
-								placeholder = "http://"
+								placeholder = "https://"
 								onChange={this.handleChange.bind(this, i)}
 							/>
 						</label>
 					</div>
 					<div>
-						<label>{__( 'Link Url (Optional)', 'browser-shots-carousel' )}
+						<label>{__( 'Slide URL (Optional)', 'browser-shots-carousel' )}
 							<br />
 							<input
 								type="text"
 								value={ undefined != this.props.attributes.slides[i] ? this.props.attributes.slides[i].link : ''}
-								placeholder = "http://"
+								placeholder = "https://"
 								onChange={this.handleLinkChange.bind(this, i)}
 							/>
 						</label>
@@ -110,7 +112,12 @@ class Browser_Shots_Carousel extends Component {
 						/>
 					</div>
 					<div className="browser-shots-carousel-remove">
-						<input type='button' value={__('Remove', 'browser-shots-carousel')} onClick={this.removeClick.bind(this, i)} />
+						<button class='button button-link-delete' value={__('Remove', 'browser-shots-carousel')} onClick={this.removeClick.bind(this, i)}>
+							{__('Remove Slide', 'browser-shots-carousel')}
+						</button>
+						<button class='button button-secondary' value={__('Preview', 'browser-shots-carousel')} onClick={ ( event ) => { this.refresh.bind(this, i); this.previewImage(i) } }>
+							{__('Preview Image', 'browser-shots-carousel')}
+						</button>
 					</div>
 				</div>
 			</div>
@@ -197,6 +204,16 @@ class Browser_Shots_Carousel extends Component {
 		 ) );
 	};
 
+	/**
+	 * Show the current image in a lightbox.
+	 */
+	previewImage = (i) => {
+		this.setState( {
+			preview: true,
+			previewSlide: i,
+		} );
+	}
+
 
 	render() {
 		const { attributes } = this.props;
@@ -248,7 +265,7 @@ class Browser_Shots_Carousel extends Component {
 			{
 				icon: 'edit',
 				title: __( 'Edit URL', 'browser-shots' ),
-				onClick: () => this.setState( { welcome: true } )
+				onClick: () => this.setState( { welcome: true, preview: false } )
 			},
 			{
 				icon: 'update',
@@ -262,7 +279,36 @@ class Browser_Shots_Carousel extends Component {
 			<InspectorControls>
 
 				<PanelBody title={__( 'Browser Shots Settings', 'browser-shots' )}>
-
+					{this.state.preview &&
+						<Button
+							className='button button-secondary'
+							onClick={
+								( e ) => {
+									this.setState( {
+										welcome: true,
+										preview: false,
+									});
+								}
+							}
+						>
+							{_x( 'Close Preview', 'Close preview image button text', 'browser-shots' )}
+						</Button>
+					}
+					{!this.state.welcome &&
+						<Button
+							className='button button-secondary'
+							onClick={
+								( e ) => {
+									this.setState( {
+										welcome: true,
+										preview: false,
+									});
+								}
+							}
+						>
+							{_x( 'Close Preview', 'Close preview image button text', 'browser-shots' )}
+						</Button>
+					}
 					<p>{__( 'Image Dimensions', 'browser-shots' )}</p>
 					<PanelRow className="browser-shots-dimensions">
 						<TextControl
@@ -505,43 +551,55 @@ class Browser_Shots_Carousel extends Component {
 		return (
 
 			<Fragment>
-				{this.state.welcome &&
-					<div className="browsershots-block-carousel">
-						<div className="browsershots-svg">
-							<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
-								<g fill="none" fill-rule="evenodd">
-									<path fill="#000000" d="M18,5 L4,5 L4,19 C2.8954305,19 2,18.1045695 2,17 L2,5 C2,3.8954305 2.8954305,3 4,3 L16,3 C17.1045695,3 18,3.8954305 18,5 Z" />
-									<path stroke="#000000" stroke-width="2" d="M16.6666667,8 L11.3333333,8 L10.5,10 L8,10 C7.44771525,10 7,10.4477153 7,11 L7,19 C7,19.5522847 7.44771525,20 8,20 L20,20 C20.5522847,20 21,19.5522847 21,19 L21,11 C21,10.4477153 20.5522847,10 20,10 L17.5,10 L16.6666667,8 Z" />
-									<circle cx="14" cy="15" r="2" stroke="#000000" stroke-width="2" />
-								</g>
-							</svg>
+				{this.state.preview &&
+					<Fragment>
+						<BlockControls>
+							<Toolbar controls={resetSelect} />
+						</BlockControls>
+						{inspectorControls}
+						<div style={{backgroundImage: 'url(https://s0.wordpress.com/mshots/v1/' + encodeURI( this.state.slides[this.state.previewSlide].title ) + `?w=${width}&h=${height}&version=${this.state.version})`,backgroundSize: 'cover', width: '100%', minHeight: '100vh' }}>
+							<button class='button button-primary' value={__('Close Preview', 'browser-shots-carousel')} onClick={ ( event ) => { this.setState( { welcome: true, preview: false } ); } }>
+							{__('Close Preview', 'browser-shots-carousel')}
+							</button>
 						</div>
-						{this.showSlides()}
-						<div className="browser-shots-carousel-actions">
-							<a
-								href="#"
-								title={__( 'Add Slide', 'browser-shots-carousel' )}
-								className="add-slide"
-								onClick={
-									( e ) => {
-										e.preventDefault();
-										this.addClick();
+					</Fragment>
+				}
+				{this.state.welcome && !this.state.preview &&
+					<Fragment>
+						{inspectorControls}
+						<div className="browsershots-block-carousel">
+							<div className="browsershots-svg">
+							<svg width="72" height="72" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" fill="none" rx="0" ry="0"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M19.4003 5.6001H4.60034V14.4001H19.4003V5.6001Z" fill="#ffffff"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M3.50015 3.3999H20.5001C21.1101 3.3999 21.6001 3.8899 21.6001 4.4999V15.4999C21.6001 16.1099 21.1101 16.5999 20.5001 16.5999H14.0002V19.3999H17.0001C17.3301 19.3999 17.6001 19.6699 17.6001 19.9999C17.6001 20.3299 17.3301 20.5999 17.0001 20.5999H7.00015C6.67015 20.5999 6.40015 20.3299 6.40015 19.9999C6.40015 19.6699 6.67015 19.3999 7.00015 19.3999H10.0002V16.5999H3.50015C2.89015 16.5999 2.40015 16.1099 2.40015 15.4999V4.4999C2.40015 3.8899 2.89015 3.3999 3.50015 3.3999ZM3.60015 15.3999H20.4001V4.5999H3.60015V15.3999Z" fill="#000000"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M17.0001 19.3999H7.00015C6.67015 19.3999 6.40015 19.6699 6.40015 19.9999C6.40015 20.3299 6.67015 20.5999 7.00015 20.5999H17.0001C17.3301 20.5999 17.6001 20.3299 17.6001 19.9999C17.6001 19.6699 17.3301 19.3999 17.0001 19.3999Z" fill="black" fill-opacity="0.2"></path></svg>
+							<h4>{__('Browser Shots Carousel', 'browser-shots-carousel')}</h4>
+							</div>
+							{this.showSlides()}
+							<div className="browser-shots-carousel-actions">
+								<a
+									href="#"
+									title={__( 'Add Slide', 'browser-shots-carousel' )}
+									className="add-slide"
+									onClick={
+										( e ) => {
+											e.preventDefault();
+											this.addClick();
+										}
 									}
-								}
-							>
-								<span className="dashicons dashicons-plus"></span>
-							</a>
-							<input
-								type="submit" id="browsershots-input-preview"
-								value={__( 'Preview', 'browser-shots-carousel' )}
-								onClick={
-									( e ) => {
-										this.setState( { welcome: false } );
+								>
+									<span className="dashicons dashicons-plus"></span>
+								</a><br />
+								<button
+									class="button button-primary" id="browsershots-input-preview"
+									onClick={
+										( e ) => {
+											this.setState( { welcome: false } );
+										}
 									}
-								}
-							/>
+								>
+									{__( 'Preview Slideshow', 'browser-shots-carousel' )}
+								</button>
+							</div>
 						</div>
-					</div>
+					</Fragment>
 				}
 
 				{!this.state.welcome &&

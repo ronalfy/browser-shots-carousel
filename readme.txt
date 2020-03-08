@@ -2,7 +2,7 @@
 Contributors: ronalfy, BinaryMoon
 Tags: blocks, website, carousel, screenshots, screenshot
 Requires at least: 5.0
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: 0.8.0
 Requires PHP: 5.6
 License: GPLv2 or later

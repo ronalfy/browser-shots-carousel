@@ -1,1 +1,93 @@
-.browser-shots-gutenberg-wrapper:after{content:"";display:table;clear:both}.browsershots-block-carousel{text-align:center}.browsershots-block-carousel input[type="submit"]{font-size:18px;padding-top:10px;padding-bottom:10px;height:auto}.browsershots-block-carousel label{font-weight:700}.browsershots-block-carousel input[type="text"],.browsershots-block-carousel .wp-caption-text{color:#000;font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:400;width:100%;max-width:500px;background:#FFF;margin:0 auto;padding:10px;-webkit-box-shadow:0 0 0 transparent;box-shadow:0 0 0 transparent;-webkit-transition:-webkit-box-shadow .1s linear;transition:-webkit-box-shadow .1s linear;-o-transition:box-shadow .1s linear;transition:box-shadow .1s linear;transition:box-shadow .1s linear, -webkit-box-shadow .1s linear;border-radius:4px;border:1px solid #8d96a0;line-height:1.1;text-align:center}.browsershots-block-carousel .browser-shots-carousel-remove{margin-top:15px}.browsershots-block-carousel .browsershots-svg{text-align:center}.browsershots-block-carousel .browser-shots-carousel-actions{display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center}.browsershots-block-carousel .browser-shots-carousel-actions a{display:inline-block;text-decoration:none;border:1px solid #000;border-radius:100%;color:#000;padding:10px;margin-right:10px;height:42px}.browsershots-block-carousel .browser-shots-carousel-actions a:hover{text-decoration:none;color:#000}.browsershots-block-carousel .browser-shots-carousel-actions a span.dashicons{line-height:1.1 !important}.browser-shots-dimensions{-ms-flex-align:start;align-items:flex-start;-ms-flex-wrap:wrap;flex-wrap:wrap}.browser-shots-dimensions .components-base-control{width:48%;margin-bottom:0 !important}.browser-shots-dimensions .components-base-control__field{margin-bottom:0 !important}.browser-shots-dimensions-options{margin-bottom:5px}.browser-shots-carousel-input-row{padding:10px;font-size:13px;background:#17283d;border:1px solid #000b19;margin:2px 0}.browser-shots-carousel-input-row label{color:#FFF;font-family:Verdana, Geneva, Tahoma, sans-serif}.button-preview{color:#FFF}
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.browser-shots-gutenberg-wrapper:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+.browsershots-block-carousel {
+  text-align: center; }
+  .browsershots-block-carousel input[type="submit"] {
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: auto; }
+  .browsershots-block-carousel label {
+    font-weight: 700; }
+  .browsershots-block-carousel input[type="text"],
+  .browsershots-block-carousel .wp-caption-text {
+    color: #000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 400;
+    width: 100%;
+    max-width: 500px;
+    background: #FFF;
+    margin: 0 auto;
+    padding: 10px;
+    -webkit-box-shadow: 0 0 0 transparent;
+            box-shadow: 0 0 0 transparent;
+    -webkit-transition: -webkit-box-shadow .1s linear;
+    transition: -webkit-box-shadow .1s linear;
+    -o-transition: box-shadow .1s linear;
+    transition: box-shadow .1s linear;
+    transition: box-shadow .1s linear, -webkit-box-shadow .1s linear;
+    border-radius: 4px;
+    border: 1px solid #8d96a0;
+    line-height: 1.1;
+    text-align: center; }
+  .browsershots-block-carousel .browser-shots-carousel-remove {
+    margin-top: 15px; }
+  .browsershots-block-carousel .browsershots-svg {
+    text-align: center; }
+  .browsershots-block-carousel .browser-shots-carousel-actions {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center; }
+    .browsershots-block-carousel .browser-shots-carousel-actions a {
+      display: inline-block;
+      text-decoration: none;
+      border: 1px solid #000;
+      border-radius: 100%;
+      color: #000;
+      padding: 10px;
+      margin-right: 10px;
+      height: 42px; }
+      .browsershots-block-carousel .browser-shots-carousel-actions a:hover {
+        text-decoration: none;
+        color: #000; }
+      .browsershots-block-carousel .browser-shots-carousel-actions a span.dashicons {
+        line-height: 1.1 !important; }
+
+.browser-shots-dimensions {
+  -ms-flex-align: start;
+      align-items: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+  .browser-shots-dimensions .components-base-control {
+    width: 48%;
+    margin-bottom: 0 !important; }
+  .browser-shots-dimensions .components-base-control__field {
+    margin-bottom: 0 !important; }
+
+.browser-shots-dimensions-options {
+  margin-bottom: 5px; }
+
+.browser-shots-carousel-input-row {
+  padding: 10px;
+  font-size: 13px;
+  background: #17283d;
+  border: 1px solid #000b19;
+  margin: 2px 0; }
+  .browser-shots-carousel-input-row label {
+    color: #FFF;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; }
+
+.button-preview {
+  color: #FFF; }

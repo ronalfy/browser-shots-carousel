@@ -2,8 +2,8 @@
 Contributors: ronalfy, BinaryMoon
 Tags: blocks, website, carousel, screenshots, screenshot
 Requires at least: 5.0
-Tested up to: 5.4
-Stable tag: 0.8.0
+Tested up to: 5.7
+Stable tag: 0.9.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,10 @@ Nivo Slider
 
 == Changelog ==
 
+= 0.9.0 =
+* Released 2021-03-09
+* Fixing dependencies and WP 5.7 testing.
+
 = 0.8.0 =
 * Released 2020-01-17
 * Updating interface and adding inline previews.
@@ -51,11 +55,5 @@ Nivo Slider
 
 == Upgrade Notice ==
 
-= 0.8.0 =
-Updating interface and adding inline previews.
-
-= 0.7.1 =
-Fixed bug in Gutenberg output so the carousel shows in the right place.
-
-= 0.7.0 =
-Initial release.
+= 0.9.0 =
+Fixing dependencies and WP 5.7 testing.
